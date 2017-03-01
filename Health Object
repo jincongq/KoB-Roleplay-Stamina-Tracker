@@ -1,0 +1,55 @@
+// Java
+// Health Object Superclass
+
+
+class HealthObject
+{
+	private int health, maxHealth;
+	private String name;
+  
+	public HealthObject(int maxHealth, String name)
+	{
+		this.maxHealth = maxHealth;
+		health = maxHealth;
+		this.name = name;
+	}
+  
+	public int gethealth()
+	{
+		return health;
+  }  
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void fullHealth()
+	{
+		health = maxHealth;
+	}
+	
+	public void setMaxHealth(int newMax)
+	{
+		maxHealth = newMax;
+	}
+	
+	public void decreaseHealth(int decreaseAmount)
+	{
+		health -= decreaseAmount;
+		if (health < 0)
+		{
+			health = 0;
+		}
+	}
+	
+	public void healHealth(int healAmount)
+	{
+		health += healAmount;
+		if (health > maxHealth)
+		{
+			health = maxHealth;
+		}
+	}
+	
+}
