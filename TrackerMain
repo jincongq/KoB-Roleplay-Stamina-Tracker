@@ -1,0 +1,18 @@
+// Java
+// Main program should allow user to create new objects and use methods within these objects
+// Should take keyboard or GUI commands to use these methods
+//eventually, should be able to save backup while in the middle of the game
+
+
+class TrackerMain
+{
+ public void main (String[] args)
+ {
+ 		// array of players
+		// array of monsters?
+ 
+    // loop until done?
+    // if action performed, do thing
+    
+ }
+}
