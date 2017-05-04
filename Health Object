@@ -14,7 +14,7 @@ class HealthObject
 		this.name = name;
 	}
   
-	public int gethealth()
+	public int getHealth()
 	{
 		return health;
   }  
