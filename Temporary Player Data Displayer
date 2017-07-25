@@ -1,0 +1,213 @@
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+public class PlayerDataFrame extends JFrame{
+	
+	
+
+	private JPanel fullPanel;
+	private PlayersPanel playersPanel;
+	private DataPanel dataPanel;
+	private int numOfPlayers;
+	private ArrayList<Player> players;
+	
+	public PlayerDataFrame(){
+		setSize(1300, 768);
+		players=new ArrayList<Player>();
+	
+		fullPanel=new JPanel();
+		fullPanel.setLayout(new BorderLayout());
+		playersPanel= new PlayersPanel(numOfPlayers, players);
+		dataPanel= new DataPanel();
+		add(fullPanel);
+		fullPanel.add(playersPanel, BorderLayout.WEST);
+		fullPanel.add(dataPanel,BorderLayout.CENTER);
+		
+	}
+
+	public void addPlayer(String name, String characterName, String classBonus, String skill1, String skill2, String skill3, int fullStamina, int movement){
+		players.add(new Player(name, characterName, classBonus, skill1, skill2, skill3, fullStamina, movement));
+		numOfPlayers++;
+		fullPanel.remove(playersPanel);
+		playersPanel = new PlayersPanel(numOfPlayers, players); 
+		fullPanel.add(playersPanel, BorderLayout.WEST);
+		fullPanel.validate();
+		fullPanel.repaint();
+	}
+	
+	
+	
+	//Left side panel for selecting player to display. Constant.
+	
+	public void displayPlayer(String button){
+		fullPanel.remove(dataPanel);
+		//Player temp=new Player(null,null,null,null, null,null, 0,0);
+		for (Player player:players){
+			if (player.name==button){
+				//temp=player;
+				dataPanel= new DataPanel(player);
+				break;
+			}
+		}
+		fullPanel.add(dataPanel,BorderLayout.CENTER);
+		fullPanel.validate();
+		fullPanel.repaint();
+		
+		
+		
+	}
+	
+	class ButtonListener implements ActionListener {
+		String button;
+
+		public ButtonListener(String string) {
+			button = string;
+		}
+
+		public void actionPerformed(ActionEvent event) {
+			displayPlayer(button);
+		}
+	}
+	
+	
+	class PlayersPanel extends JPanel{
+		
+		JButton newButton;
+		
+		public PlayersPanel(int numOfPlayers, ArrayList<Player> players){
+			setLayout (new GridLayout(numOfPlayers,1));
+			if (numOfPlayers!=0){
+				for (Player player:players){
+					newButton= new JButton(player.name);
+					newButton.addActionListener(new ButtonListener(player.name));
+				//If want to show currently chosen player, grey out.
+				/*if (player==currentPlayer){
+					
+				}*/
+					add(newButton);
+				}
+			}
+			
+		}
+		/*
+		public PlayersPanel(){
+			
+		}*/
+		
+	}
+	
+	
+	
+	
+	
+	/*
+	 * Center panel for displaying player data. Changes when players are selected.
+	 */
+	
+	class DataPanel extends JPanel{
+		JTextArea name, characterName, classBonus, skill1, skill2, skill3, fullStamina, movement;
+		JPanel namePanel, statPanel;
+		
+		public DataPanel(){
+			
+		}
+		
+		public DataPanel(Player player){
+			
+			setLayout(new GridLayout(6,1));
+			name=new JTextArea("Player: "+player.name);
+			characterName=new JTextArea("Character: "+player.characterName);
+			classBonus=new JTextArea("Class Bonus: "+player.classBonus);
+			skill1=new JTextArea(player.skill1);
+			skill2=new JTextArea(player.skill2);
+			skill3=new JTextArea(player.skill3);
+			fullStamina=new JTextArea("Max Stamina: "+player.fullStamina);
+			movement=new JTextArea("Movement: "+player.movement);
+			
+			//font
+			name.setFont(new Font("Arial", Font.PLAIN, 40));
+			characterName.setFont(new Font("Arial", Font.PLAIN, 40));
+			classBonus.setFont(new Font("Arial", Font.PLAIN, 30));
+			skill1.setFont(new Font("Arial", Font.PLAIN, 30));
+			skill2.setFont(new Font("Arial", Font.PLAIN, 30));
+			skill3.setFont(new Font("Arial", Font.PLAIN, 30));
+			fullStamina.setFont(new Font("Arial", Font.PLAIN, 40));
+			movement.setFont(new Font("Arial", Font.PLAIN, 40));
+			//word wrap
+			name.setWrapStyleWord(true);
+			characterName.setWrapStyleWord(true);
+			classBonus.setWrapStyleWord(true);
+			skill1.setWrapStyleWord(true);
+			skill2.setWrapStyleWord(true);
+			skill3.setWrapStyleWord(true);
+			fullStamina.setWrapStyleWord(true);
+			movement.setWrapStyleWord(true);
+			//line wrap
+			name.setLineWrap(true);
+			characterName.setLineWrap(true);
+			classBonus.setLineWrap(true);
+			skill1.setLineWrap(true);
+			skill2.setLineWrap(true);
+			skill3.setLineWrap(true);
+			fullStamina.setLineWrap(true);
+			movement.setLineWrap(true);
+			//edit false
+			name.setEditable(false);
+			characterName.setEditable(false);
+			classBonus.setEditable(false);
+			skill1.setEditable(false);
+			skill2.setEditable(false);
+			skill3.setEditable(false);
+			fullStamina.setEditable(false);
+			movement.setEditable(false);
+			
+			//namePanel
+			namePanel=new JPanel();
+			namePanel.setLayout(new GridLayout(1,2));
+			namePanel.add(this.name);
+			namePanel.add(this.characterName);
+			//statPanel
+			statPanel=new JPanel();
+			statPanel.setLayout(new GridLayout(1,2));
+			statPanel.add(this.fullStamina);
+			statPanel.add(this.movement);
+					
+			add(namePanel);
+			add(statPanel);
+			add(classBonus);
+			add(skill1);
+			add(skill2);
+			add(skill3);
+			
+		}
+		
+	}
+	
+	//Player data structure
+
+	class Player{
+		private String name, characterName, classBonus, skill1, skill2, skill3;
+		private int fullStamina, movement;
+		public Player(String name, String characterName, String classBonus, String skill1, String skill2, String skill3, int fullStamina, int movement){
+			this.name=name;
+			this.characterName=characterName;
+			this.classBonus=classBonus;
+			this.skill1=skill1;
+			this.skill2=skill2;
+			this.skill3=skill3;
+			this.fullStamina=fullStamina;
+			this.movement=movement;
+		}
+		
+	}
+}
