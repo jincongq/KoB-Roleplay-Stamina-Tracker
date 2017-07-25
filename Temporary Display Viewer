@@ -1,0 +1,22 @@
+/*
+  Viewer for the tempoary display, requiring the user to input everything manually.
+  Should change to a version where all bonuses/skills are already in the system, and the players will only need to click a few buttons for their class, and type in their name.
+*/
+
+import javax.swing.JFrame;
+
+public class DisplayViewer {
+
+	public static void main(String[] args) {
+		PlayerDataFrame frame=new PlayerDataFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setTitle("KoB Campaigns");
+	    //name, character name, class bonus, skill 1, skill 2, skill 3, max Stamina, movement
+	    frame.addPlayer("Example", "Alessa", "Rolls two dice. The higher of the two is chosen unless it's a critical fail.", "Charge Arrow - 3 - Your arrow can penetrate and hit anyone in a straight line. Allies can roll to dodge.", "Arching Shot - 1 - Shoot an arrow over something (ex. allies) to hit an enemy within your sights.", "Knockback - 2 - Knock enemies back 3 spaces with a melee attack.", 43, 5);
+	    
+	    frame.setVisible(true);
+		
+
+	}
+
+}
